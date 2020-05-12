@@ -1,0 +1,53 @@
+.pagination {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px;
+}
+
+.prev-button  {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.next-button {
+  width: 100%;
+  display: flex;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+}
+
+.pagination button {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  line-height: normal;
+}
+
+.pagination .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  background: #a0eaff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.button span {
+  color: #FFF;
+}

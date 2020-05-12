@@ -1,0 +1,57 @@
+.home a {
+  line-height: 60px;
+  width: 52px;
+}
+
+.loggedIn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loggedIn span {
+  color: #2d88ff;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.loggedIn a, button {
+  width: 260px;
+}
+
+.logOut button {
+  width: 120px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.logOut button:hover {
+  background: transparent;
+  text-decoration: underline;
+  color: #2d88ff;
+}
+
+.loggedOut {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.loggedOut .login {
+  width: 52px;
+}
+
+.loggedOut .login:hover {
+  background: transparent;
+  text-decoration: underline;
+  color: #2d88ff;
+}
+
+.loggedOut .register {
+  width: 100px;
+  background: #5cbbff;
+  color: #FFF;
+}
+

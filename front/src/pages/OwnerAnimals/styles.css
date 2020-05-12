@@ -1,0 +1,35 @@
+.communiques-container {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.communique-item {
+  text-align: left;
+  margin: 8px;
+  border-top: 1px solid #2d88ff;
+}
+
+.communique-item:hover {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.delete-animal {
+  color: #cc0404;
+  line-height: 60px;
+  border: 1px solid transparent;
+}
+
+.delete-animal:hover {
+  color: #cc0404;
+  background: transparent;
+  border: 1px solid #cc0404;
+}
+
+.edit-animal {
+  line-height: 60px;
+}
+
+.edit-animal:hover {
+  line-height: 60px;
+}
