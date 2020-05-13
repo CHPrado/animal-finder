@@ -6,9 +6,11 @@ import { Edit, Delete, Pets } from '@material-ui/icons';
 import petPortrait from '../../assets/pet-portrait.png';
 import Header from '../../components/Header';
 import api from '../../services/api';
-import getAnimalStatus from '../../utils/getAnimalStatus';
+import getAnimalStatus from '../../utils';
 
 import './styles.css';
+import Loader from '../../components/Loader';
+import AlertBox from '../../components/AlertBox';
 
 const OwnerAnimals = () => {
   const [ownerAnimals, setOwnerAnimals] = useState([]);
@@ -17,9 +19,16 @@ const OwnerAnimals = () => {
   const ownerId = localStorage.getItem('ownerId');
   const ownerName = localStorage.getItem('ownerName');
 
+  const [isLoading, setIsloading] = useState(false);
+  const [alertState, setAlertState] = useState(false);
+  const [alertType, setAlertType] = useState('success');
+  const [alertMessage, setAlertMessage] = useState('');
+
   if (!ownerId) { history.push('/login'); }
 
   const handleDeleteAnimal = async (id) => {
+    setIsloading(true);
+
     await api.delete(`animal/${id}`, {
       headers: {
         Authorization: ownerId,
@@ -27,23 +36,50 @@ const OwnerAnimals = () => {
     }).then(() => {
       setOwnerAnimals(ownerAnimals.filter((animal) => animal.id !== id));
     }).catch((error) => {
-      alert(`Erro ao excluir animal. ${error.response.data.message}`);
+      setAlertMessage(`Erro ao excluir animal. ${error?.response?.data?.message}`);
+      setAlertType('error');
+      setAlertState(true);
+    }).finally(() =>{
+      setIsloading(false);
     });
   };
 
-  useEffect(() => {
-    api.get('owner-animals', {
+  const getOwnerAnimals = async () => {
+    setIsloading(true);
+
+    await api.get('owner-animals', {
       headers: {
         Authorization: ownerId,
       },
     }).then((response) => {
       setOwnerAnimals(response.data);
+    }).catch(() => {
+      setAlertMessage('Falha ao conectar com o servidor.');
+      setAlertType('error');
+      setAlertState(true);
+    }).finally(() => {
+      setIsloading(false);
     });
+  }
+
+  useEffect(() => {
+    getOwnerAnimals();
   }, []);
+
+  const handleCloseAlert = () => {
+    setAlertState(false);
+  };
 
   return (
     <>
+      {isLoading && <Loader />}
       <Header ownerName={ownerName} />
+      <AlertBox
+        type={alertType}
+        open={alertState}
+        close={handleCloseAlert}
+        message={alertMessage}
+      />
       <div className="container">
         <div className="list-container">
           <h2>Meus pets perdidos</h2>
@@ -89,10 +125,19 @@ const OwnerAnimals = () => {
                         </div>
 
                         <div className="container-footer">
-                          <Link className="edit-animal" to={{ pathname: '/animal', state: { animal } }}>
+                          <Link
+                            className="edit-animal"
+                            to={{ pathname: '/animal', state: { animal } }}
+                            disabled={isLoading}
+                          >
                             <Edit size={20} />
                           </Link>
-                          <button className="delete-animal" onClick={() => handleDeleteAnimal(animal.id)} type="button">
+                          <button
+                            className="delete-animal"
+                            type="button"
+                            disabled={isLoading}
+                            onClick={() => handleDeleteAnimal(animal.id)}
+                          >
                             <Delete size={20} />
                           </button>
                         </div>

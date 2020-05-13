@@ -1,0 +1,41 @@
+.loading {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+.loading .loader-container {
+  position: absolute;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading h1, .loading .loader {
+  color: #006eff;
+  font-size: 50px;
+  z-index: 100;
+}
+
+.loading .loading-bg {
+  width: 100%;
+  height: 100%;
+  background: #a0eaff;
+  opacity: 50%;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #006eff;
+  border-bottom: 16px solid #006eff;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}

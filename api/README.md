@@ -21,14 +21,14 @@
           "id": 1,
           "name": "Jhon",
           "email": "jhon@teste2.com",
-          "phone": "9999999999",
+          "phone": "(99) 99999-9999",
           "password": "teste"
         },
         {
           "id": 2,
           "name": "Mary",
           "email": "mary@teste.com",
-          "phone": "9999999999",
+          "phone": "(99) 99999-9999",
           "password": "teste"
         }
       ]
@@ -39,7 +39,7 @@
 
   - name: nome do dono (string, required)
   - email: email do dono (string, required, email)
-  - phone: telefone do dono (string, required, length(10))
+  - phone: telefone do dono (string, required)
   - password: senha do dono (string, required)
 
 - Request
@@ -50,7 +50,7 @@
     {
       "name": "Jhon",
       "email": "jhon@teste2.com",
-      "phone": "9999999999",
+      "phone": "(99) 99999-9999",
       "password": "teste"
     }
 
@@ -71,7 +71,7 @@
 
 Retorna todos os dados dos animais e de seus donos.
 
-A listagem está limitada a quatro animais por página.
+A listagem está limitada a dois animais por página.
 
 - Request
 
@@ -96,7 +96,7 @@ A listagem está limitada a quatro animais por página.
           "ownerId": 1,
           "ownerName": "Jhon",
           "email": "jhon@teste2.com",
-          "phone": "9999999999"
+          "phone": "(99) 99999-9999"
         },
         {
           "id": 2,
@@ -110,7 +110,7 @@ A listagem está limitada a quatro animais por página.
           "ownerId": 2,
           "ownerName": "Mary",
           "email": "mary@teste.com",
-          "phone": "9999999999"
+          "phone": "(99) 99999-9999"
         }
       ]
 
@@ -239,7 +239,7 @@ A listagem está limitada a quatro animais por página.
 - Atributos (object)
 
   - name: nome de quem encontrou (string, required)
-  - phone: nome de quem encontrou (string, required, length(10))
+  - phone: nome de quem encontrou (string, required)
   - info: informações (string, required)
   - animalId: id do animal
 
@@ -250,7 +250,7 @@ A listagem está limitada a quatro animais por página.
     ```JSON
     {
       "name": "Jhon",
-      "phone": "1566666666",
+      "phone": "(99) 99999-9999",
       "info": "Achei aqui",
       "animalId": 1
     }
@@ -303,14 +303,14 @@ Retorna todos os dados dos animais cadastrados pelo dono e a lista de comunicado
             {
               "id": 1,
               "name": "Jhon",
-              "phone": "1566666666",
+              "phone": "(99) 99999-9999",
               "info": "Achei aqui",
               "animalId": 1
             },
             {
               "id": 2,
               "name": "Moises",
-              "phone": "3434343111",
+              "phone": "(99) 99999-9999",
               "info": "achei",
               "animalId": 1
             },
@@ -330,14 +330,14 @@ Retorna todos os dados dos animais cadastrados pelo dono e a lista de comunicado
             {
               "id": 3,
               "name": "Jhon",
-              "phone": "1566666666",
+              "phone": "(99) 99999-9999",
               "info": "Achei aqui",
               "animalId": 2
             },
             {
               "id": 4,
               "name": "Moises",
-              "phone": "3434343111",
+              "phone": "(99) 99999-9999",
               "info": "achei",
               "animalId": 2
             },

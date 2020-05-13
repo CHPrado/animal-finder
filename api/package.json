@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon src/app.js",
     "start": "node src/app.js",
     "knex:migrate:make": "knex migrate:make",
     "knex:migrate:latest": "knex migrate:latest",
@@ -14,8 +15,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-import-helpers": "^1.0.2",
-    "nodemon": "^2.0.3",
-    "sucrase": "^3.13.0"
+    "nodemon": "^2.0.3"
   },
   "dependencies": {
     "celebrate": "^12.1.1",

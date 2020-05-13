@@ -5,6 +5,8 @@ import { ArrowBackIos } from '@material-ui/icons';
 
 import petPortrait from '../../assets/pet-portrait.png';
 import Header from '../../components/Header';
+import Loader from '../../components/Loader';
+import AlertBox from '../../components/AlertBox';
 import api from '../../services/api';
 
 import './styles.css';
@@ -19,7 +21,6 @@ const Animal = (props) => {
 
   // eslint-disable-next-line react/destructuring-assignment
   const animal = props?.location?.state?.animal;
-  // const animal = undefined;
 
   const [picture, setPicture] = useState('');
   const [name, setName] = useState('');
@@ -28,6 +29,11 @@ const Animal = (props) => {
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
   const [status, setStatus] = useState(0);
+
+  const [isLoading, setIsloading] = useState(false);
+  const [alertState, setAlertState] = useState(false);
+  const [alertType, setAlertType] = useState('success');
+  const [alertMessage, setAlertMessage] = useState('');
 
   const [file, setFile] = useState('');
 
@@ -41,6 +47,8 @@ const Animal = (props) => {
 
   const handleConfirmar = async (e) => {
     e.preventDefault();
+
+    setIsloading(true);
 
     const data = {
       picture,
@@ -59,11 +67,17 @@ const Animal = (props) => {
         Authorization: ownerId,
       },
     }).then((response) => {
-      alert(`${response.data.message}`);
+      setAlertMessage(`${response.data.message}`);
+      setAlertType('success');
+      setAlertState(true);
 
       history.push('/owner/animals');
     }).catch((error) => {
-      alert(`Falha ao salvar informações. ${error.response.data.message}`);
+      setAlertMessage(`Falha ao salvar informações. ${error?.response?.data?.message}`);
+      setAlertType('error');
+      setAlertState(true);
+    }).finally(() =>{
+      setIsloading(false);
     });
   };
 
@@ -89,9 +103,20 @@ const Animal = (props) => {
     }
   }, [file]);
 
+  const handleCloseAlert = () => {
+    setAlertState(false);
+  };
+
   return (
     <>
+      {isLoading && <Loader />}
       <Header ownerName={ownerName} />
+      <AlertBox
+        type={alertType}
+        open={alertState}
+        close={handleCloseAlert}
+        message={alertMessage}
+      />
       <div className="container">
         <div className="form-container">
           <form onSubmit={handleConfirmar}>
@@ -116,6 +141,7 @@ const Animal = (props) => {
                 type="file"
                 accept="image/*"
                 ref={getRef}
+                disabled={isLoading}
                 onChange={(e) => {
                   setFile(e.target.files[0]);
                 }}
@@ -125,16 +151,19 @@ const Animal = (props) => {
             <input
               placeholder="Nome"
               value={name}
+              disabled={isLoading}
               onChange={(e) => setName(e.target.value)}
             />
             <input
               placeholder="Idade"
               value={age}
+              disabled={isLoading}
               onChange={(e) => setAge(e.target.value)}
             />
             <textarea
               placeholder="Informações extras"
               value={info}
+              disabled={isLoading}
               onChange={(e) => setInfo(e.target.value)}
             />
 
@@ -142,12 +171,14 @@ const Animal = (props) => {
               <input
                 placeholder="Cidade"
                 value={city}
+                disabled={isLoading}
                 onChange={(e) => setCity(e.target.value)}
               />
               <input
                 placeholder="UF"
                 style={{ width: 80 }}
                 value={uf}
+                disabled={isLoading}
                 onChange={(e) => setUf(e.target.value)}
               />
             </div>
@@ -163,6 +194,7 @@ const Animal = (props) => {
                 <select
                   label="Status"
                   value={status}
+                  disabled={isLoading}
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="">Status</option>
@@ -172,7 +204,13 @@ const Animal = (props) => {
                 </select>
               )}
 
-            <button className="button" type="submit">Confirmar</button>
+            <button
+              className="button"
+              type="submit"
+              disabled={isLoading}
+            >
+              Confirmar
+            </button>
           </form>
           <div className="container-footer">
             <Link className="button-link" to="/owner/animals">

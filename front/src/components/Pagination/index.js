@@ -26,7 +26,7 @@ const setPagesRange = (page, lastPage, totalPages) => {
 const Pagination = ({
   page, lastPage, setPage,
 }) => {
-  const pages = setPagesRange(page, lastPage, 5);
+  const pages = setPagesRange(page, lastPage, 3);
 
   return (
     <div className="pagination">

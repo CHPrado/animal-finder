@@ -3,15 +3,16 @@ const connection = require('../database/connection');
 module.exports = {
   async index(request, response) {
     const { page = 1 } = request.query;
+    const qtPagination = 2;
 
     const [count] = await connection('animal').count().where('status', '=', 0);
-    const totalPages = Math.ceil(count['count(*)'] / 4).toString();
+    const totalPages = Math.ceil(count['count(*)'] / qtPagination).toString();
 
     const animals = await connection('animal')
       .join('owner', 'owner.id', '=', 'animal.ownerId')
       .where('status', '=', 0)
-      .limit(4)
-      .offset((page - 1) * 4)
+      .limit(qtPagination)
+      .offset((page - 1) * qtPagination)
       .select([
         'animal.*',
         'owner.name as ownerName',

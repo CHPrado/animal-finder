@@ -18,6 +18,7 @@
   color: #cc0404;
   line-height: 60px;
   border: 1px solid transparent;
+  width: 100%;
 }
 
 .delete-animal:hover {

@@ -7,6 +7,8 @@ import { ArrowBackIos } from '@material-ui/icons';
 import petPortrait from '../../assets/pet-portrait.png';
 import Header from '../../components/Header';
 import api from '../../services/api';
+import Loader from '../../components/Loader';
+import AlertBox from '../../components/AlertBox';
 
 const Found = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -18,10 +20,17 @@ const Found = (props) => {
   const [phone, setPhone] = useState('');
   const [info, setInfo] = useState('');
 
+  const [isLoading, setIsloading] = useState(false);
+  const [alertState, setAlertState] = useState(false);
+  const [alertType, setAlertType] = useState('success');
+  const [alertMessage, setAlertMessage] = useState('');
+
   const history = useHistory();
 
   const handleEnviar = async (e) => {
     e.preventDefault();
+
+    setIsloading(true);
 
     const data = {
       name,
@@ -32,18 +41,35 @@ const Found = (props) => {
 
     await api.post('communique', data)
       .then((response) => {
-        alert(`${response.data.message}`);
+        setAlertMessage(`${response.data.message}`);
+        setAlertType('success');
+        setAlertState(true);
 
         history.push('/');
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        setAlertMessage(error?.response?.data?.message);
+        setAlertType('error');
+        setAlertState(true);
+      }).finally(() =>{
+        setIsloading(false);
       });
+  };
+
+  const handleCloseAlert = () => {
+    setAlertState(false);
   };
 
   return (
     <>
+      {isLoading && <Loader />}
       <Header ownerName={ownerName} />
+      <AlertBox
+        type={alertType}
+        open={alertState}
+        close={handleCloseAlert}
+        message={alertMessage}
+      />
       <div className="container">
         {animal && (
           <div className="info-container">
@@ -88,7 +114,7 @@ const Found = (props) => {
             </div>
 
             <div className="container-footer">
-              <Link className="button-link" to="/">
+              <Link className="button-link" to="/" disabled={isLoading}>
                 <ArrowBackIos size={16} />
                 Voltar
               </Link>
@@ -105,20 +131,23 @@ const Found = (props) => {
             <input
               placeholder="Nome"
               value={name}
+              disabled={isLoading}
               onChange={(e) => setName(e.target.value)}
             />
             <InputMask
               placeholder="Telefone"
               mask="(99) 99999-9999"
               value={phone}
+              disabled={isLoading}
               onChange={(e) => setPhone(e.target.value)}
             />
             <textarea
               placeholder="Informações"
               value={info}
+              disabled={isLoading}
               onChange={(e) => setInfo(e.target.value)}
             />
-            <button type="submit">Enviar</button>
+            <button type="submit" disabled={isLoading}>Enviar</button>
           </form>
         </div>
       </div>

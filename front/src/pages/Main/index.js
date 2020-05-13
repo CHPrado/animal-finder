@@ -4,24 +4,43 @@ import { Link } from 'react-router-dom';
 import { Pets } from '@material-ui/icons';
 
 import petPortrait from '../../assets/pet-portrait.png';
+import AlertBox from '../../components/AlertBox';
 import Header from '../../components/Header';
+import Loader from '../../components/Loader';
 import Pagination from '../../components/Pagination';
 import api from '../../services/api';
-import getAnimalStatus from '../../utils/getAnimalStatus';
+import getAnimalStatus from '../../utils';
 
 const Main = () => {
   const [animals, setAnimals] = useState([]);
   const [lastPage, setLastPage] = useState(0);
   const [page, setPage] = useState(1);
 
+  const [isLoading, setIsloading] = useState(false);
+  const [alertState, setAlertState] = useState(false);
+  const [alertType, setAlertType] = useState('success');
+  const [alertMessage, setAlertMessage] = useState('');
+
   const ownerName = localStorage.getItem('ownerName');
 
   const loadAnimals = async () => {
+    setIsloading(true);
+
     await api.get('animal', { params: { page } })
       .then((response) => {
         setAnimals(response.data);
         setLastPage(response.headers['x-total-pages']);
+      }).catch(() => {
+        setAlertMessage('Falha ao conectar com o servidor.');
+        setAlertType('error');
+        setAlertState(true);
+      }).finally(() => {
+        setIsloading(false);
       });
+  };
+
+  const handleCloseAlert = () => {
+    setAlertState(false);
   };
 
   useEffect(() => {
@@ -30,7 +49,14 @@ const Main = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <Header ownerName={ownerName} />
+      <AlertBox
+        type={alertType}
+        open={alertState}
+        close={handleCloseAlert}
+        message={alertMessage}
+      />
       <div className="container">
         <div className="list-container">
           {animals.length
@@ -77,20 +103,6 @@ const Main = () => {
                         <div>
                           <strong>ESTADO (DESAPARECIMENTO)</strong>
                           <p>{animal.uf}</p>
-                        </div>
-                      </div>
-
-                      <strong>DONO</strong>
-                      <p>{animal.ownerName}</p>
-
-                      <div className="input-group">
-                        <div>
-                          <strong>EMAIL</strong>
-                          <p>{animal.email}</p>
-                        </div>
-                        <div>
-                          <strong>TELEFONE</strong>
-                          <p>{animal.phone}</p>
                         </div>
                       </div>
 

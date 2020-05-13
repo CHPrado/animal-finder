@@ -1,5 +1,4 @@
 .pagination {
-  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -22,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 350px;
+  min-width: 270px;
 }
 
 .pagination button {

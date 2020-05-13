@@ -24,12 +24,12 @@ const Header = ({ ownerName }) => {
           <>
             <div className="loggedIn">
               <span>Olá, {ownerName}</span>
-              <Link to="/owner/animals">Meus pets</Link>
-              <Link to="/animal">Cadastrar animal perdido</Link>
+              <Link to="/owner/animals">Meus Pets</Link>
+              <Link to="/animal">Novo Caso</Link>
             </div>
             <div className="logOut">
               <button onClick={handleLogout} type="button">
-                Fazer Logout
+                Sair
               </button>
             </div>
           </>
