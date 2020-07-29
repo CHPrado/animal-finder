@@ -1,6 +1,7 @@
 # animal-finder
 
 [Documentação da API](https://github.com/CHPrado/animal-finder/tree/master/api)
+[Projeto no Heroku](https://animal-finder-front.herokuapp.com/)
 
 ## Como usar
 
